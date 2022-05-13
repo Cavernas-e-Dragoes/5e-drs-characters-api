@@ -18,19 +18,16 @@ import java.util.List;
 @RequestMapping("/v1/api/characters")
 public class CharController {
 
-    private final PasswordEncoder encoder;
-
     private final CharactersRepository charactersRepository;
 
     @Autowired
-    public CharController(PasswordEncoder encoder, CharactersRepository charactersRepository) {
-        this.encoder = encoder;
+    public CharController(CharactersRepository charactersRepository) {
         this.charactersRepository = charactersRepository;
     }
 
     @GetMapping("/")
     public String version(){
-        return "1.0.2";
+        return "1.0.4";
     }
 
     @GetMapping("/list")
