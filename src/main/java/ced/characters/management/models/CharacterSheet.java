@@ -21,7 +21,7 @@ public class CharacterSheet {
     @Column(nullable = false)
     private String login;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Column(nullable = false)
