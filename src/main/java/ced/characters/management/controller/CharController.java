@@ -3,6 +3,7 @@ package ced.characters.management.controller;
 import ced.characters.management.models.CharacterSheet;
 import ced.characters.management.repository.CharactersRepository;
 import ced.characters.management.service.CharactersService;
+import ced.characters.management.vo.CharacterSheetDTO;
 import ced.characters.management.vo.CharactersListSheetDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +37,17 @@ public class CharController {
 
     @GetMapping("/")
     public String version(){
-        return "1.0.6";
+        return "1.0.8";
     }
 
     @GetMapping("/list")
     public ResponseEntity<List<CharactersListSheetDTO>> list(@RequestHeader(value = "Authorization", required = false) final String authorization){
-        System.out.println("hmm");
        return ResponseEntity.status(HttpStatus.OK).body(charactersService.findAll(authorization));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CharacterSheetDTO> getCharacter(@PathVariable final Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(charactersService.findById(id));
     }
 
     @PostMapping

@@ -12,5 +12,4 @@ public interface CharactersRepository extends JpaRepository<CharacterSheet, Long
 
     public Optional<CharacterSheet> findByName(String name);
 
-
 }

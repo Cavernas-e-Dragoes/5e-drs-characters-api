@@ -5,12 +5,14 @@ import ced.characters.management.models.CharacterSheet;
 import ced.characters.management.repository.CharClassRepository;
 import ced.characters.management.repository.CharactersRepository;
 import ced.characters.management.repository.RaceRepository;
+import ced.characters.management.vo.CharacterSheetDTO;
 import ced.characters.management.vo.CharactersListSheetDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CharactersService {
@@ -36,7 +38,7 @@ public class CharactersService {
 
         for (CharacterSheet characterSheet : characterSheetList) {
 
-            CharactersListSheetDTO charactersSheetDTO = convertToDto(characterSheet);
+            CharactersListSheetDTO charactersSheetDTO = convertToDtoList(characterSheet);
             charactersSheetDTO.setRaceName(raceInterface.findById(characterSheet.getRace()).get().getName());
             charactersSheetDTO.setClassName(charClassRepository.findById(characterSheet.getCharClass()).get().getName());
 
@@ -46,9 +48,18 @@ public class CharactersService {
         return charactersSheetDTOS;
     }
 
+    public CharacterSheetDTO findById(Long id) {
+        Optional<CharacterSheet> characterSheet = charactersRepository.findById(id);
+        return convertToDto(characterSheet);
+    }
 
-    private CharactersListSheetDTO convertToDto(CharacterSheet characterSheet) {
+
+    private CharactersListSheetDTO convertToDtoList(CharacterSheet characterSheet) {
         return modelMapper.map(characterSheet, CharactersListSheetDTO.class);
+    }
+
+    private CharacterSheetDTO convertToDto(Optional<CharacterSheet>  characterSheet) {
+        return modelMapper.map(characterSheet.getClass(), CharacterSheetDTO.class);
     }
 
 }
