@@ -42,7 +42,13 @@ public class CharController {
 
     @GetMapping("/list")
     public ResponseEntity<List<CharactersListSheetDTO>> list(@RequestHeader(value = "Authorization", required = false) final String authorization){
-       return ResponseEntity.status(HttpStatus.OK).body(charactersService.findAll(authorization));
+        List<CharactersListSheetDTO> listSheetDTOS = charactersService.findAll(authorization);
+
+        if (listSheetDTOS.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(listSheetDTOS);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(listSheetDTOS);
     }
 
     @GetMapping("/{id}")

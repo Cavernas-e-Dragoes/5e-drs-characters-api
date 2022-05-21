@@ -33,8 +33,16 @@ public class CharactersService {
 
     public List<CharactersListSheetDTO> findAll(String authorization) {
 
-        List<CharacterSheet> characterSheetList = charactersRepository.findAllByLogin(JwtHelper.findUser(authorization));
+        String jwt = JwtHelper.findUser(authorization);
+
+        assert jwt != null;
         List<CharactersListSheetDTO> charactersSheetDTOS = new ArrayList<>();
+
+        if (jwt.isBlank()){
+            return charactersSheetDTOS;
+        }
+
+        List<CharacterSheet> characterSheetList = charactersRepository.findAllByLogin(jwt);
 
         for (CharacterSheet characterSheet : characterSheetList) {
 
