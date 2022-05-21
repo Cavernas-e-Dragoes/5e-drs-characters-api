@@ -46,7 +46,7 @@ public class CharDatabaseLoader implements ApplicationRunner {
         adna.setName("Adna");
         adna.setRace(1L);
         adna.setCharClass(5L);
-        adna.setAlignment("Neutro e Bom");
+        adna.setAlignment("Leal");
         adna.setHitPoints(12);
         adna.setStrength(15);
         adna.setDexterity(15);
@@ -191,7 +191,7 @@ public class CharDatabaseLoader implements ApplicationRunner {
         CharacterSheet fifi = new CharacterSheet();
         fifi.setId(10L);
         fifi.setLogin("asa");
-        fifi.setName("Jake the Snake");
+        fifi.setName("A Fifi");
         fifi.setRace(5L);
         fifi.setCharClass(6L);
         fifi.setAlignment("Caótico e Mal");
