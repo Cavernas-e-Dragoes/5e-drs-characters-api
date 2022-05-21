@@ -33,7 +33,7 @@ public class CharacterSheetDTO {
     private List<Magic> magics;
 
 
-    private Integer level = 1;
+    private Integer level;
 
 
     private String Alignment;
@@ -42,7 +42,7 @@ public class CharacterSheetDTO {
     private Integer HitPoints;
 
 
-    private Integer experiencePoints = 0;
+    private Integer experiencePoints;
 
 
     private Integer initiative;

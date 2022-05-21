@@ -50,7 +50,12 @@ public class CharactersService {
 
     public CharacterSheetDTO findById(Long id) {
         Optional<CharacterSheet> characterSheet = charactersRepository.findById(id);
-        return convertToDto(characterSheet);
+
+        CharacterSheetDTO characterSheetDTO = convertToDto(characterSheet);
+        characterSheetDTO.setRaceName(raceInterface.findById(characterSheet.get().getRace()).get().getName());
+        characterSheetDTO.setClassName(charClassRepository.findById(characterSheet.get().getCharClass()).get().getName());
+
+        return characterSheetDTO;
     }
 
 
