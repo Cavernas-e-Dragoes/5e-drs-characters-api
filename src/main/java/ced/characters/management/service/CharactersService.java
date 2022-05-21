@@ -59,7 +59,7 @@ public class CharactersService {
     }
 
     private CharacterSheetDTO convertToDto(Optional<CharacterSheet>  characterSheet) {
-        return modelMapper.map(characterSheet.getClass(), CharacterSheetDTO.class);
+        return modelMapper.map(characterSheet, CharacterSheetDTO.class);
     }
 
 }
