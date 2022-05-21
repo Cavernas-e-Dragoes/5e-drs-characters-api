@@ -3,7 +3,7 @@ package ced.characters.management.controller;
 import ced.characters.management.models.CharacterSheet;
 import ced.characters.management.repository.CharactersRepository;
 import ced.characters.management.service.CharactersService;
-import ced.characters.management.vo.CharactersSheetDTO;
+import ced.characters.management.vo.CharactersListSheetDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +40,7 @@ public class CharController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<CharactersSheetDTO>> list(@RequestHeader(value = "Authorization", required = false) final String authorization){
+    public ResponseEntity<List<CharactersListSheetDTO>> list(@RequestHeader(value = "Authorization", required = false) final String authorization){
         System.out.println("hmm");
        return ResponseEntity.status(HttpStatus.OK).body(charactersService.findAll(authorization));
     }
