@@ -60,7 +60,6 @@ public class CharController {
     public ResponseEntity<CharacterSheet> create(@RequestBody CharacterSheet characterSheet) {
 
         characterSheet = charactersService.save(characterSheet);
-
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(characterSheet);
     }
@@ -73,7 +72,7 @@ public class CharController {
 
             if (actualChar.isPresent()) {
                 BeanUtils.copyProperties(newChar, actualChar.get(),"id");
-                actualChar = Optional.ofNullable(charactersRepository.save(actualChar.get()));
+                actualChar = Optional.of(charactersRepository.save(actualChar.get()));
                 return ResponseEntity.ok(actualChar);
             }
             return  ResponseEntity.notFound().build();
