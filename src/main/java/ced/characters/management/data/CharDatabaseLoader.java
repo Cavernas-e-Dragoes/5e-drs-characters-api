@@ -21,7 +21,7 @@ public class CharDatabaseLoader implements ApplicationRunner {
 
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args)  {
         CharacterSheet adno = new CharacterSheet();
         adno.setId(1L);
         adno.setLogin("asa");
@@ -39,6 +39,7 @@ public class CharDatabaseLoader implements ApplicationRunner {
         adno.setArmorClass(15);
         adno.setSpeed(5F);
         adno.setLevel(32);
+        adno.setInspiration(11);
 
         CharacterSheet adna = new CharacterSheet();
         adna.setId(2L);
@@ -130,7 +131,7 @@ public class CharDatabaseLoader implements ApplicationRunner {
         doby.setIntelligence(1);
         doby.setWisdom(1);
         doby.setCharisma(9);
-        doby.setArmorClass(01);
+        doby.setArmorClass(1);
         doby.setSpeed(8.5F);
         doby.setLevel(4);
 

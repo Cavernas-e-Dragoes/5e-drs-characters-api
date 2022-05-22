@@ -15,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ced.characters.management.helper.Calcs.calcInitialHT;
-import static ced.characters.management.helper.Calcs.convertAttribute;
+import static ced.characters.management.helper.Calcs.*;
 
 @Service
 public class CharactersService {
@@ -75,6 +74,8 @@ public class CharactersService {
         characterSheetDTO.setIntelligenceModifier(convertAttribute(characterSheetDTO.getConstitution()));
         characterSheetDTO.setWisdomModifier(convertAttribute(characterSheetDTO.getWisdom()));
         characterSheetDTO.setCharismaModifier(convertAttribute(characterSheetDTO.getCharisma()));
+
+        characterSheetDTO.setProficiencyBonus(getProficiencyBonus(characterSheetDTO.getLevel()));
 
         return characterSheetDTO;
     }

@@ -117,6 +117,8 @@ public class CharacterSheetDTO {
     /**
      * Calculated properties
      */
+    private Integer proficiencyBonus;
+
     private Integer strengthModifier;
 
     private Integer dexterityModifier;
