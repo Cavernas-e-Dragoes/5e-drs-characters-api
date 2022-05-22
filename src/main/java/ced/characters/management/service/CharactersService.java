@@ -1,6 +1,7 @@
 package ced.characters.management.service;
 
 import ced.characters.management.helper.JwtHelper;
+import ced.characters.management.models.CharClass;
 import ced.characters.management.models.CharacterSheet;
 import ced.characters.management.repository.CharClassRepository;
 import ced.characters.management.repository.CharactersRepository;
@@ -13,6 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static ced.characters.management.helper.Calcs.calcInitialHT;
+import static ced.characters.management.helper.Calcs.convertAttribute;
 
 @Service
 public class CharactersService {
@@ -61,11 +65,19 @@ public class CharactersService {
 
         CharacterSheetDTO characterSheetDTO = convertToDto(characterSheet);
         characterSheetDTO.setRaceName(raceInterface.findById(characterSheet.get().getRace()).get().getName());
-        characterSheetDTO.setClassName(charClassRepository.findById(characterSheet.get().getCharClass()).get().getName());
+
+        Optional<CharClass> charClass = charClassRepository.findById(characterSheet.get().getCharClass());
+        characterSheetDTO.setClassName(charClass.get().getName());
+
+        characterSheetDTO.setStrengthModifier(convertAttribute(characterSheetDTO.getStrength()));
+        characterSheetDTO.setDexterityModifier(convertAttribute(characterSheetDTO.getDexterity()));
+        characterSheetDTO.setConstitutionModifier(convertAttribute(characterSheetDTO.getConstitution()));
+        characterSheetDTO.setIntelligenceModifier(convertAttribute(characterSheetDTO.getConstitution()));
+        characterSheetDTO.setWisdomModifier(convertAttribute(characterSheetDTO.getWisdom()));
+        characterSheetDTO.setCharismaModifier(convertAttribute(characterSheetDTO.getCharisma()));
 
         return characterSheetDTO;
     }
-
 
     private CharactersListSheetDTO convertToDtoList(CharacterSheet characterSheet) {
         return modelMapper.map(characterSheet, CharactersListSheetDTO.class);
@@ -73,6 +85,15 @@ public class CharactersService {
 
     private CharacterSheetDTO convertToDto(Optional<CharacterSheet>  characterSheet) {
         return modelMapper.map(characterSheet, CharacterSheetDTO.class);
+    }
+
+    public CharacterSheet save(CharacterSheet characterSheet) {
+
+        Optional<CharClass> charClass = charClassRepository.findById(characterSheet.getCharClass());
+
+        characterSheet.setHitPoints(calcInitialHT(charClass.get().getHitDice(), convertAttribute(characterSheet.getConstitution())));
+
+        return charactersRepository.save(characterSheet);
     }
 
 }

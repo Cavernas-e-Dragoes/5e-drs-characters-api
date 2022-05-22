@@ -37,7 +37,7 @@ public class CharController {
 
     @GetMapping("/")
     public String version(){
-        return "1.0.8";
+        return "1.0.9";
     }
 
     @GetMapping("/list")
@@ -58,7 +58,8 @@ public class CharController {
 
     @PostMapping
     public ResponseEntity<CharacterSheet> create(@RequestBody CharacterSheet characterSheet) {
-        characterSheet = charactersRepository.save(characterSheet);
+
+        characterSheet = charactersService.save(characterSheet);
 
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(characterSheet);

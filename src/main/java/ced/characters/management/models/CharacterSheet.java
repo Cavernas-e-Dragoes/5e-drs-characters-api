@@ -64,17 +64,9 @@ public class CharacterSheet {
 
     private Integer passiveWisdom;
 
-    private Float height;
-
-    private Float weight;
-
-    private Integer age;
-
-
     /**
      * Attributes
      */
-
     @Column(nullable = false)
     private Integer strength;
 

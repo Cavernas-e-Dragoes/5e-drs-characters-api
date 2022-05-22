@@ -1,28 +1,19 @@
 package ced.characters.management.models;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+@Data
 @Entity
 public class CharClass {
+
+    @Id
     private Long id;
 
     private String name;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Integer hitDice;
 
-    @Id
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
