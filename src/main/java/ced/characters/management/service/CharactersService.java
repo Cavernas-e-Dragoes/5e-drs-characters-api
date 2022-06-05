@@ -22,23 +22,16 @@ public class CharactersService {
 
     private final CharactersRepository charactersRepository;
 
-    private final RaceRepository raceInterface;
-
-    private final CharClassRepository charClassRepository;
-
     private final ModelMapper modelMapper = new ModelMapper();
 
-    public CharactersService(CharactersRepository charactersRepository, RaceRepository raceInterface, CharClassRepository charClassRepository) {
+    public CharactersService(CharactersRepository charactersRepository) {
         this.charactersRepository = charactersRepository;
-        this.raceInterface = raceInterface;
-        this.charClassRepository = charClassRepository;
     }
 
     public List<CharactersListSheetDTO> findAll(String authorization) {
 
         String jwt = JwtHelper.findUser(authorization);
 
-        assert jwt != null;
         List<CharactersListSheetDTO> charactersSheetDTOS = new ArrayList<>();
 
         if (jwt.isBlank()){
@@ -50,8 +43,8 @@ public class CharactersService {
         for (CharacterSheet characterSheet : characterSheetList) {
 
             CharactersListSheetDTO charactersSheetDTO = convertToDtoList(characterSheet);
-            charactersSheetDTO.setRaceName(raceInterface.findById(characterSheet.getRace()).get().getName());
-            charactersSheetDTO.setClassName(charClassRepository.findById(characterSheet.getCharClass()).get().getName());
+            charactersSheetDTO.setRaceName(characterSheet.getRace().getName());
+            charactersSheetDTO.setClassName(characterSheet.getCharClass().getName());
 
             charactersSheetDTOS.add(charactersSheetDTO);
         }
@@ -63,10 +56,9 @@ public class CharactersService {
         Optional<CharacterSheet> characterSheet = charactersRepository.findById(id);
 
         CharacterSheetDTO characterSheetDTO = convertToDto(characterSheet);
-        characterSheetDTO.setRaceName(raceInterface.findById(characterSheet.get().getRace()).get().getName());
+        characterSheetDTO.setRaceName(characterSheet.get().getRace().getName());
 
-        Optional<CharClass> charClass = charClassRepository.findById(characterSheet.get().getCharClass());
-        characterSheetDTO.setClassName(charClass.get().getName());
+        characterSheetDTO.setClassName(characterSheet.get().getCharClass().getName());
 
         characterSheetDTO.setStrengthModifier(convertAttribute(characterSheetDTO.getStrength()));
         characterSheetDTO.setDexterityModifier(convertAttribute(characterSheetDTO.getDexterity()));
@@ -90,9 +82,7 @@ public class CharactersService {
 
     public CharacterSheet save(CharacterSheet characterSheet) {
 
-        Optional<CharClass> charClass = charClassRepository.findById(characterSheet.getCharClass());
-
-        characterSheet.setHitPoints(calcInitialHT(charClass.get().getHitDice(), convertAttribute(characterSheet.getConstitution())));
+        characterSheet.setHitPoints(calcInitialHT(characterSheet.getCharClass().getHitDice(), convertAttribute(characterSheet.getConstitution())));
 
         return charactersRepository.save(characterSheet);
     }

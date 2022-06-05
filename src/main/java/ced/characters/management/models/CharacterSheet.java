@@ -5,12 +5,18 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -30,17 +36,25 @@ public class CharacterSheet {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
-    private Long race;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "race_id")
+    private Race race;
 
-    @Column(nullable = false)
-    private Long charClass;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "char_class_id")
+    private CharClass charClass;
 
-    @OneToMany
-    private List<Equipment> equipments;
+    @ManyToMany
+    @JoinTable(name = "characters_equipments",
+            joinColumns = @JoinColumn(name = "character_sheet_id"),
+            inverseJoinColumns = @JoinColumn(name = "equipment_id"))
+    private List<Equipment> equipments = new ArrayList<>();
 
-    @OneToMany
-    private List<Magic> magics;
+    @ManyToMany
+    @JoinTable(name = "characters_magics",
+            joinColumns = @JoinColumn(name = "character_sheet_id"),
+            inverseJoinColumns = @JoinColumn(name = "magic_id"))
+    private List<Magic> magics = new ArrayList<>();
 
     @Column(nullable = false)
     private Integer level = 1;
