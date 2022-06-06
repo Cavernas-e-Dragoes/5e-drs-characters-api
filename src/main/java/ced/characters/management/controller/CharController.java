@@ -37,7 +37,7 @@ public class CharController {
 
     @GetMapping("/")
     public String version(){
-        return "1.1.0";
+        return "1.1.1";
     }
 
     @GetMapping("/list")
