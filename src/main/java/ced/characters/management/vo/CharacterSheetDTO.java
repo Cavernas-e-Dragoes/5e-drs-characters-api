@@ -2,6 +2,8 @@ package ced.characters.management.vo;
 
 import ced.characters.management.models.Equipment;
 import ced.characters.management.models.Magic;
+import ced.characters.management.models.Race;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +23,11 @@ public class CharacterSheetDTO {
 
     private String name;
 
-    private Long race;
+    @JsonIgnore
+    private Race race;
 
-    private Long charClass;
+    @JsonIgnore
+    private Race charClass;
 
     private List<Equipment> equipments;
 
