@@ -5,23 +5,19 @@ import lombok.EqualsAndHashCode;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import org.springframework.data.annotation.Id;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Document(collection = "equipments")
-public class Equipment {
+@Document(collection = "sub_races")
+public class SubRace {
 
     @EqualsAndHashCode.Include
     @Id
     private String id;
-
     private String name;
-    private String type;
-    private Integer price;
     private String description;
-    private Integer weight;
-    private String damage;
-    private String properties;
-    private Boolean stealth;
-    private Boolean strength;
+    private List<String> traits;
+    private List<String> abilityScoreIncrease;
+
 }

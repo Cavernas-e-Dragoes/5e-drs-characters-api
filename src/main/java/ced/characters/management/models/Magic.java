@@ -1,15 +1,29 @@
 package ced.characters.management.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+import org.springframework.data.annotation.Id;
+
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Document(collection = "magics")
 public class Magic {
 
+    @EqualsAndHashCode.Include
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
+
+    private String name;
+    private String description;
+    private String level;
+    private String school;
+    private String castingTime;
+    private String range;
+    private String components;
+    private String duration;
+    private Boolean concentration;
+    private Boolean ritual;
 
 }

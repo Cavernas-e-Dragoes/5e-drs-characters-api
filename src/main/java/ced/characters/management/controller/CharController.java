@@ -1,9 +1,9 @@
 package ced.characters.management.controller;
 
+import ced.characters.management.helper.JwtHelper;
 import ced.characters.management.models.CharacterSheet;
 import ced.characters.management.repository.CharactersRepository;
 import ced.characters.management.service.CharactersService;
-import ced.characters.management.vo.CharacterSheetDTO;
 import ced.characters.management.vo.CharactersListSheetDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,22 +38,25 @@ public class CharController {
 
     @GetMapping("/")
     public String version(){
-        return "1.1.2";
+        return "1.2";
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<CharactersListSheetDTO>> list(@RequestHeader(value = "Authorization", required = false) final String authorization){
-        List<CharactersListSheetDTO> listSheetDTOS = charactersService.findAll(authorization);
+    public ResponseEntity<List<CharactersListSheetDTO>> list(@RequestHeader(value = "Authorization", required = false)
+                                                                 final String authorization) {
+        final String login = JwtHelper.getLoginFromJWT(authorization);
 
-        if (listSheetDTOS.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(listSheetDTOS);
+        if (login.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ArrayList<>());
         }
+
+        List<CharactersListSheetDTO> listSheetDTOS = charactersService.findAll(login);
 
         return ResponseEntity.status(HttpStatus.OK).body(listSheetDTOS);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CharacterSheetDTO> getCharacter(@PathVariable final Long id){
+    public ResponseEntity<CharacterSheet> getCharacter(@PathVariable final String id){
         return ResponseEntity.status(HttpStatus.OK).body(charactersService.findById(id));
     }
 

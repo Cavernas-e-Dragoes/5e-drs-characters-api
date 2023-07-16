@@ -10,7 +10,7 @@ public class JwtHelper {
 
     private JwtHelper() {
     }
-    public static String findUser(String token) {
+    public static String getLoginFromJWT(String token) {
         token = token.replaceAll("Bearer\\s+", "");
         DecodedJWT decodedJwt = JWT.decode(token);
 

@@ -1,11 +1,7 @@
 package ced.characters.management.service;
 
-import ced.characters.management.helper.JwtHelper;
-import ced.characters.management.models.CharClass;
 import ced.characters.management.models.CharacterSheet;
-import ced.characters.management.repository.CharClassRepository;
 import ced.characters.management.repository.CharactersRepository;
-import ced.characters.management.repository.RaceRepository;
 import ced.characters.management.vo.CharacterSheetDTO;
 import ced.characters.management.vo.CharactersListSheetDTO;
 import org.modelmapper.ModelMapper;
@@ -13,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static ced.characters.management.helper.Calcs.*;
+
 
 @Service
 public class CharactersService {
@@ -28,17 +26,11 @@ public class CharactersService {
         this.charactersRepository = charactersRepository;
     }
 
-    public List<CharactersListSheetDTO> findAll(String authorization) {
-
-        String jwt = JwtHelper.findUser(authorization);
+    public List<CharactersListSheetDTO> findAll(final String login) {
 
         List<CharactersListSheetDTO> charactersSheetDTOS = new ArrayList<>();
 
-        if (jwt.isBlank()){
-            return charactersSheetDTOS;
-        }
-
-        List<CharacterSheet> characterSheetList = charactersRepository.findAllByLogin(jwt);
+        List<CharacterSheet> characterSheetList = charactersRepository.findAllByLogin(login);
 
         for (CharacterSheet characterSheet : characterSheetList) {
 
@@ -52,13 +44,10 @@ public class CharactersService {
         return charactersSheetDTOS;
     }
 
-    public CharacterSheetDTO findById(Long id) {
+    public CharacterSheetDTO findById(String id) {
         Optional<CharacterSheet> characterSheet = charactersRepository.findById(id);
 
         CharacterSheetDTO characterSheetDTO = convertToDto(characterSheet);
-        characterSheetDTO.setRaceName(characterSheet.get().getRace().getName());
-
-        characterSheetDTO.setClassName(characterSheet.get().getCharClass().getName());
 
         characterSheetDTO.setStrengthModifier(convertAttribute(characterSheetDTO.getStrength()));
         characterSheetDTO.setDexterityModifier(convertAttribute(characterSheetDTO.getDexterity()));
@@ -76,14 +65,17 @@ public class CharactersService {
         return modelMapper.map(characterSheet, CharactersListSheetDTO.class);
     }
 
-    private CharacterSheetDTO convertToDto(Optional<CharacterSheet>  characterSheet) {
-        return modelMapper.map(characterSheet, CharacterSheetDTO.class);
+    private CharacterSheetDTO convertToDto(Optional<CharacterSheet> characterSheet) {
+        if (characterSheet.isPresent()) {
+            CharacterSheet sheet = characterSheet.get();
+            return modelMapper.map(sheet, CharacterSheetDTO.class);
+        } else {
+            throw new NoSuchElementException("Personagem não encontrado");
+        }
     }
 
     public CharacterSheet save(CharacterSheet characterSheet) {
-
         characterSheet.setHitPoints(calcInitialHT(characterSheet.getCharClass().getHitDice(), convertAttribute(characterSheet.getConstitution())));
-
         return charactersRepository.save(characterSheet);
     }
 

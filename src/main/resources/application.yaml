@@ -1,10 +1,5 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}
-    username: ${PROD_DB_USERNAME}
-    password: ${PROD_DB_PASSWORD}
-    name: characters-management
-
-  jpa:
-    hibernate:
-      ddl-auto: update
+  data:
+    mongodb:
+      database: <PROD_DB_NAME>
+      uri: <PROD_URI_NAME>

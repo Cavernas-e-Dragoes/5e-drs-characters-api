@@ -4,10 +4,13 @@ import static java.lang.Math.floor;
 
 public class Calcs {
 
-    public static int convertAttribute(Integer value)
-    {
-        double calc = floor((value - 10.0) / 2);
-        return (int) calc;
+    public static int convertAttribute(final Integer value) {
+        if (value != null) {
+            double calc = Math.floor((value - 10.0) / 2);
+            return (int) calc;
+        } else {
+            return 0;
+        }
     }
     public static int calcInitialHT(Integer hitDice, Integer constitution)
     {
