@@ -30,6 +30,9 @@ public class CharacterSheet {
     private Race race;
 
     @DBRef
+    private SubRace subRace;
+
+    @DBRef
     @Field("class")
     private CharClass charClass;
 
@@ -44,7 +47,6 @@ public class CharacterSheet {
     private Integer hitPoints;
     private Integer experiencePoints = 0;
     private Integer initiative;
-    private Float speed;
     private Integer armorClass;
     private Integer inspiration;
     private Integer passiveWisdom;

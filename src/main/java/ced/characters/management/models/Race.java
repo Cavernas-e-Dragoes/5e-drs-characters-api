@@ -23,7 +23,4 @@ public class Race {
     private List<String> traits;
     private List<String> abilityScoreIncrease;
 
-    @DBRef
-    private List<SubRace> subRaces;
-
 }
