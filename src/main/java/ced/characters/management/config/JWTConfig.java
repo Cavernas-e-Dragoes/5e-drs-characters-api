@@ -20,6 +20,7 @@ public class JWTConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/v1/api/characters/**").permitAll()
+                .antMatchers("/v1/api/classes/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

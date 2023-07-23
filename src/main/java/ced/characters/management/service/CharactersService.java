@@ -1,7 +1,9 @@
 package ced.characters.management.service;
 
+import ced.characters.management.models.CharClass;
 import ced.characters.management.models.CharacterSheet;
 import ced.characters.management.repository.CharactersRepository;
+import ced.characters.management.repository.ClassesRepository;
 import ced.characters.management.vo.CharacterSheetDTO;
 import ced.characters.management.vo.CharactersListSheetDTO;
 import org.modelmapper.ModelMapper;
@@ -19,11 +21,14 @@ import static ced.characters.management.helper.Calcs.*;
 public class CharactersService {
 
     private final CharactersRepository charactersRepository;
+    private final ClassesRepository classesRepository;
 
     private final ModelMapper modelMapper = new ModelMapper();
 
-    public CharactersService(CharactersRepository charactersRepository) {
+    public CharactersService(final CharactersRepository charactersRepository,
+                             final ClassesRepository classesRepository) {
         this.charactersRepository = charactersRepository;
+        this.classesRepository = classesRepository;
     }
 
     public List<CharactersListSheetDTO> findAll(final String login) {
@@ -75,7 +80,9 @@ public class CharactersService {
     }
 
     public CharacterSheet save(CharacterSheet characterSheet) {
-        characterSheet.setHitPoints(calcInitialHT(characterSheet.getCharClass().getHitDice(), convertAttribute(characterSheet.getConstitution())));
+        Optional<CharClass> charClass = classesRepository.findById(characterSheet.getCharClass().getId());
+
+        characterSheet.setHitPoints(calcInitialHT(charClass.get().getHitDice(), convertAttribute(characterSheet.getConstitution())));
         return charactersRepository.save(characterSheet);
     }
 

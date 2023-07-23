@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class CharactersListSheetDTO {
 
-    private Long id;
+    private String id;
 
     private String raceName;
 
