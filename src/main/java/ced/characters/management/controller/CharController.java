@@ -9,14 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +35,7 @@ public class CharController {
     }
 
     @GetMapping("/list")
+    @CrossOrigin(origins = { "https://cavernasedragoes.com.br", "http://localhost:4200" })
     public ResponseEntity<List<CharactersListSheetDTO>> list(@RequestHeader(value = "Authorization", required = false)
                                                                  final String authorization) {
         final String login = JwtHelper.getLoginFromJWT(authorization);
@@ -56,11 +50,13 @@ public class CharController {
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin(origins = { "https://cavernasedragoes.com.br", "http://localhost:4200" })
     public ResponseEntity<CharacterSheet> getCharacter(@PathVariable final String id){
         return ResponseEntity.status(HttpStatus.OK).body(charactersService.findById(id));
     }
 
     @PostMapping
+    @CrossOrigin(origins = { "https://cavernasedragoes.com.br", "http://localhost:4200" })
     public ResponseEntity<CharacterSheet> create(@RequestBody CharacterSheet characterSheet) {
 
         characterSheet = charactersService.save(characterSheet);
@@ -69,6 +65,7 @@ public class CharController {
     }
 
     @PutMapping("/{name}")
+    @CrossOrigin(origins = { "https://cavernasedragoes.com.br", "http://localhost:4200" })
     public ResponseEntity<?> update(@PathVariable String name,
                                        @RequestBody CharacterSheet newChar){
 
