@@ -35,7 +35,7 @@ public class CharController {
     }
 
     @GetMapping("/list")
-    @CrossOrigin(origins = { "https://cavernasedragoes.com.br", "http://localhost:4200" })
+    @CrossOrigin(origins = { "https://nodejs-production-c9fc.up.railway.app/", "http://localhost:4200" })
     public ResponseEntity<List<CharactersListSheetDTO>> list(@RequestHeader(value = "Authorization", required = false)
                                                                  final String authorization) {
         final String login = JwtHelper.getLoginFromJWT(authorization);
@@ -50,13 +50,13 @@ public class CharController {
     }
 
     @GetMapping("/{id}")
-    @CrossOrigin(origins = { "https://cavernasedragoes.com.br", "http://localhost:4200" })
+    @CrossOrigin(origins = { "https://nodejs-production-c9fc.up.railway.app/", "http://localhost:4200" })
     public ResponseEntity<CharacterSheet> getCharacter(@PathVariable final String id){
         return ResponseEntity.status(HttpStatus.OK).body(charactersService.findById(id));
     }
 
     @PostMapping
-    @CrossOrigin(origins = { "https://cavernasedragoes.com.br", "http://localhost:4200" })
+    @CrossOrigin(origins = { "https://nodejs-production-c9fc.up.railway.app/", "http://localhost:4200" })
     public ResponseEntity<CharacterSheet> create(@RequestBody CharacterSheet characterSheet) {
 
         characterSheet = charactersService.save(characterSheet);
@@ -65,7 +65,7 @@ public class CharController {
     }
 
     @PutMapping("/{name}")
-    @CrossOrigin(origins = { "https://cavernasedragoes.com.br", "http://localhost:4200" })
+    @CrossOrigin(origins = { "https://nodejs-production-c9fc.up.railway.app/", "http://localhost:4200" })
     public ResponseEntity<?> update(@PathVariable String name,
                                        @RequestBody CharacterSheet newChar){
 
