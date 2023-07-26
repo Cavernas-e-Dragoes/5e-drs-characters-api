@@ -1,5 +1,0 @@
-spring:
-  data:
-    mongodb:
-      database: "ced"
-      uri: "mongodb://mongo:qJqOGZjNGuYayaHI0lFu@containers-us-west-12.railway.app:7894"
