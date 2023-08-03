@@ -1,6 +1,12 @@
 # 1. Build Stage
 FROM maven:3.8.4-jdk-17 as builder
 
+# Declaração do argumento para a variável de ambiente
+ARG RAILWAY_ENVIRONMENT
+
+# Define a variável de ambiente dentro do contêiner
+ENV RAILWAY_ENVIRONMENT=$RAILWAY_ENVIRONMENT
+
 WORKDIR /app
 
 # Copia os arquivos do projeto pai (pom.xml) e dos módulos para o contêiner
@@ -26,5 +32,5 @@ COPY --from=builder /app/users/target/users.jar ./users.jar
 # Expõe a porta do aplicativo Spring Boot de cada módulo (ajuste conforme necessário)
 EXPOSE 8080 8081 8082
 
-# Comando de execução para iniciar cada módulo
-CMD ["java", "-jar", "utilities.jar"]
+# Comando de execução para iniciar cada módulo (use a variável de ambiente definida acima)
+CMD ["java", "-jar", "$RAILWAY_ENVIRONMENT.jar"]
