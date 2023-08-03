@@ -11,7 +11,7 @@
 
 	<groupId>ced</groupId>
 	<artifactId>5e-drs-characters-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 	<name>5e-drs-characters-api</name>
 	<description>5e-drs-characters-api</description>
 
@@ -22,7 +22,7 @@
 	</properties>
 
 	<modules>
-		<module>utils</module>
+		<module>utilities</module>
 		<module>characters</module>
 		<module>users</module>
 	</modules>
@@ -60,8 +60,9 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
 			</plugin>
 		</plugins>
 	</build>
