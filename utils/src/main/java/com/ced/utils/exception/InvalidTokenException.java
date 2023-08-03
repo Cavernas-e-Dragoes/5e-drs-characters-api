@@ -1,4 +1,4 @@
-package com.ced.utils.helper.exception;
+package com.ced.utils.exception;
 
 public class InvalidTokenException extends RuntimeException {
 
