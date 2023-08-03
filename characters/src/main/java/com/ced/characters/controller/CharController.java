@@ -2,7 +2,6 @@ package com.ced.characters.controller;
 
 
 import com.ced.characters.models.CharacterSheet;
-import com.ced.characters.repository.CharactersRepository;
 import com.ced.characters.service.CharactersService;
 import com.ced.characters.vo.CharactersListSheetDTO;
 import com.ced.utils.helper.JwtHelper;
@@ -19,12 +18,10 @@ public class CharController {
 
     private final CharactersService charactersService;
 
-    private final CharactersRepository charactersRepository;
 
     @Autowired
-    public CharController(CharactersService charactersService, CharactersRepository charactersRepository) {
+    public CharController(final CharactersService charactersService) {
         this.charactersService = charactersService;
-        this.charactersRepository = charactersRepository;
     }
 
     @GetMapping("/")
