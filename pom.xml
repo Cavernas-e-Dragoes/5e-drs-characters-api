@@ -22,9 +22,9 @@
 	</properties>
 
 	<modules>
+		<module>utils</module>
 		<module>characters</module>
 		<module>users</module>
-		<module>utils</module>
 	</modules>
 
 	<dependencies>
