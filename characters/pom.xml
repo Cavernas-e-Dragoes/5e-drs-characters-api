@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>ced</groupId>
 		<artifactId>5e-drs-characters-api</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1</version>
 	</parent>
 
 	<artifactId>characters</artifactId>
