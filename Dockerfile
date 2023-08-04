@@ -10,7 +10,7 @@ COPY characters/ ./characters
 COPY users/ ./users
 
 # Executa o build de cada módulo individualmente
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests -Dmaven.compiler.source=17 -Dmaven.compiler.target=17
 
 # 2. Run Stage
 FROM openjdk:17-jdk
