@@ -25,9 +25,9 @@ FROM openjdk:17-jdk
 WORKDIR /app
 
 # Copia os artefatos JAR de cada módulo a partir do build stage para este contêiner
-COPY --from=builder /app/utilities/target/utilities.jar ./utilities.jar
-COPY --from=builder /app/characters/target/characters.jar ./characters.jar
-COPY --from=builder /app/users/target/users.jar ./users.jar
+COPY --from=builder /app/utilities/target/utilities-1.jar ./utilities-1.jar
+COPY --from=builder /app/characters/target/characters-1.jar ./characters-1.jar
+COPY --from=builder /app/users/target/users.jar-1 ./users-1.jar
 
 # Expõe a porta do aplicativo Spring Boot de cada módulo (ajuste conforme necessário)
 EXPOSE 8080 8081 8082
