@@ -26,5 +26,4 @@ COPY --from=builder /app/users/target/users-1.jar ./users-1.jar
 # Expõe a porta do aplicativo Spring Boot de cada módulo (ajuste conforme necessário)
 EXPOSE 8080 8081 8082
 
-# Comando de execução para iniciar cada módulo (use a variável de ambiente definida acima)
-CMD ["bash", "-c", "java -jar users-1.jar & java -jar characters-1.jar"]
+CMD ["java", "-jar", "users-1.jar"]
