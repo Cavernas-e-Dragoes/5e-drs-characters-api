@@ -5,8 +5,8 @@ FROM openjdk:17-oracle
 WORKDIR /app
 
 # Copia os arquivos JAR gerados pelo Maven para o contêiner
-COPY users/target/*.jar users.jar
-COPY characters/target/*.jar characters.jar
+COPY --from=builder /app/users/target/*.jar users.jar
+COPY --from=builder /app/characters/target/*.jar characters.jar
 
 # Define o comando para executar o aplicativo de usuários
 CMD ["java", "-jar", "users.jar"]
