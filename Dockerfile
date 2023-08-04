@@ -1,11 +1,7 @@
 # 1. Build Stage
 FROM maven:3.8.4-openjdk-17 as builder
 
-# Declaração do argumento para a variável de ambiente
-ARG RAILWAY_ENVIRONMENT
 
-# Define a variável de ambiente dentro do contêiner
-ENV RAILWAY_ENVIRONMENT=$RAILWAY_ENVIRONMENT
 
 WORKDIR /app
 
