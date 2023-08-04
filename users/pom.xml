@@ -86,7 +86,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.ced.users.UserManagementApplication.java</mainClass>
+							<mainClass>com.ced.users.UserManagementApplication</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
