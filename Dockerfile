@@ -1,5 +1,5 @@
 # Define a imagem base do OpenJDK
-FROM adoptopenjdk:17-jdk-hotspot
+FROM openjdk:17-oracle
 
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
