@@ -1,8 +1,6 @@
 # 1. Build Stage
 FROM maven:3.8.4-openjdk-17 as builder
 
-
-
 WORKDIR /app
 
 # Copia os arquivos do projeto pai (pom.xml) e dos módulos para o contêiner
@@ -29,4 +27,4 @@ COPY --from=builder /app/users/target/users-1.jar ./users-1.jar
 EXPOSE 8080 8081 8082
 
 # Comando de execução para iniciar cada módulo (use a variável de ambiente definida acima)
-CMD ["java", "-jar", "$RAILWAY_ENVIRONMENT.jar"]
+CMD ["bash", "-c", "java -jar users-1.jar & java -jar characters-1.jar"]
