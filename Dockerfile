@@ -1,5 +1,5 @@
 # 1. Build Stage
-FROM maven:3.8.4-jdk-17 as builder
+FROM maven:3.8.4-openjdk-17 as builder
 
 # Declaração do argumento para a variável de ambiente
 ARG RAILWAY_ENVIRONMENT
