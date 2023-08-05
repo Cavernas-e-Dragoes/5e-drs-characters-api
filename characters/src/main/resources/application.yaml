@@ -1,8 +1,0 @@
-spring:
-  data:
-    mongodb:
-      database: ${PROD_DB_NAME}
-      uri: ${PROD_URI_NAME}
-
-server:
-  port: 8080
