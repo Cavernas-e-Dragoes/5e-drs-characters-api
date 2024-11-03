@@ -1,7 +1,7 @@
 package com.ced.repository;
 
 
-import com.ced.model.CharacterSheet;
+import com.ced.model.character.CharacterSheet;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

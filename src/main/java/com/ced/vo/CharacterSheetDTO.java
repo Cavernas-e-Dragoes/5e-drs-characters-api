@@ -1,6 +1,6 @@
 package com.ced.vo;
 
-import com.ced.model.CharacterSheet;
+import com.ced.model.character.CharacterSheet;
 import lombok.Getter;
 import lombok.Setter;
 

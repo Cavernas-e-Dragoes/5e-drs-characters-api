@@ -1,7 +1,7 @@
 package com.ced.service;
 
 import com.ced.data.DetailsUserDate;
-import com.ced.model.User;
+import com.ced.model.user.User;
 import com.ced.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
