@@ -3,7 +3,7 @@ package com.ced.service;
 
 
 import com.ced.exception.EntityNotFoundException;
-import com.ced.model.CharacterSheet;
+import com.ced.model.character.CharacterSheet;
 import com.ced.repository.CharactersRepository;
 import com.ced.repository.ClassesRepository;
 import com.ced.vo.CharacterSheetDTO;

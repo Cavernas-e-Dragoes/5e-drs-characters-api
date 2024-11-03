@@ -1,6 +1,6 @@
 package com.ced.data;
 
-import com.ced.model.User;
+import com.ced.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
