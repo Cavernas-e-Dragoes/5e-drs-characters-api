@@ -1,6 +1,6 @@
 package com.ced.repository;
 
-import com.ced.model.user.User;
+import com.ced.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

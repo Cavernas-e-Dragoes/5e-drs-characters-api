@@ -1,7 +1,7 @@
 package com.ced.security;
 
 import com.ced.data.DetailsUserDate;
-import com.ced.model.user.User;
+import com.ced.model.User;
 import com.ced.repository.UserRepository;
 import com.ced.utils.helper.JwtHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;

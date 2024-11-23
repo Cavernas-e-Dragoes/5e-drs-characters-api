@@ -1,6 +1,6 @@
 package com.ced.config;
 
-import com.ced.model.user.User;
+import com.ced.model.User;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

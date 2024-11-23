@@ -1,7 +1,6 @@
 package com.ced.data;
 
-import com.ced.model.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ced.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,7 +12,6 @@ public class DetailsUserDate implements UserDetails {
 
     private final Optional<User> optionalUser;
 
-    @Autowired
     public DetailsUserDate(Optional<User> optionalUser) {
         this.optionalUser = optionalUser;
     }

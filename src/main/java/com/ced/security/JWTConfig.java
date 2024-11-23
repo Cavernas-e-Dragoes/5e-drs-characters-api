@@ -1,7 +1,7 @@
 package com.ced.security;
 
 import com.ced.repository.UserRepository;
-import com.ced.service.DetailsUserServiceImpl;
+import com.ced.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,13 +21,13 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-public class JWTConfig  {
+public class JWTConfig {
 
     public static final String ALLOWED_ORIGIN_CAVE_DRAGONS = System.getenv("ALLOWED_ORIGIN_CAVE_DRAGONS");
     public static final String ALLOWED_ORIGIN_LOCALHOST = System.getenv("ALLOWED_ORIGIN_LOCALHOST");
 
     @Autowired
-    private DetailsUserServiceImpl userService;
+    private UserService userService;
     @Autowired
     private UserRepository userRepository;
     @Autowired
