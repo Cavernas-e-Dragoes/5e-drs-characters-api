@@ -1,5 +1,6 @@
 package com.ced.security;
 
+import com.ced.config.SecurityProperties;
 import com.ced.repository.UserRepository;
 import com.ced.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,7 +20,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 @Configuration
-@EnableWebSecurity
 public class JWTConfig {
 
     public static final String ALLOWED_ORIGIN_CAVE_DRAGONS = System.getenv("ALLOWED_ORIGIN_CAVE_DRAGONS");
@@ -28,10 +27,18 @@ public class JWTConfig {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private SecurityProperties securityProperties;
+
+    @Autowired
+    private JwtHelper jwtHelper;
 
     private final AuthenticationConfiguration configuration;
 
@@ -44,7 +51,6 @@ public class JWTConfig {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
     }
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -61,8 +67,8 @@ public class JWTConfig {
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilter(new JWTAuthFilter(configuration.getAuthenticationManager(), userRepository))
-                .addFilter(new JWTValidFilter(configuration.getAuthenticationManager()))
+                .addFilter(new JWTAuthFilter(configuration.getAuthenticationManager(), userRepository, jwtHelper))
+                .addFilter(new JWTValidFilter(configuration.getAuthenticationManager(), securityProperties))
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
@@ -78,5 +84,4 @@ public class JWTConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 }

@@ -8,3 +8,14 @@ spring:
 
 server:
   port: 8080
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.web.FilterChainProxy: DEBUG
+    com.github.bucket4j: DEBUG
+    com.ced: DEBUG
+
+security:
+  token: ${TOKEN_PASSWORD:xD}
+  expiration: ${TOKEN_EXPIRATION:600000}

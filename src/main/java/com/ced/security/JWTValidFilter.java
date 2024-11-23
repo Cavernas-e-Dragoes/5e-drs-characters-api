@@ -2,7 +2,7 @@ package com.ced.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.ced.utils.helper.JwtHelper;
+import com.ced.config.SecurityProperties;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,10 +20,12 @@ public class JWTValidFilter extends BasicAuthenticationFilter {
     public static final String HEADER_ATT = "Authorization";
     public static final String ATT_PREFIX = "Bearer ";
 
-    public JWTValidFilter(AuthenticationManager authenticationManager) {
-        super(authenticationManager);
-    }
+    private final SecurityProperties securityProperties;
 
+    public JWTValidFilter(AuthenticationManager authenticationManager, SecurityProperties securityProperties) {
+        super(authenticationManager);
+        this.securityProperties = securityProperties;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -41,12 +43,10 @@ public class JWTValidFilter extends BasicAuthenticationFilter {
 
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);
-
     }
 
     private UsernamePasswordAuthenticationToken getAuthenticationToken(String token) {
-
-        String user = JWT.require(Algorithm.HMAC512(JwtHelper.TOKEN_PASSWORD))
+        String user = JWT.require(Algorithm.HMAC512(securityProperties.getToken()))
                 .build()
                 .verify(token)
                 .getSubject();
@@ -56,7 +56,5 @@ public class JWTValidFilter extends BasicAuthenticationFilter {
         }
 
         return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
-
     }
-
 }

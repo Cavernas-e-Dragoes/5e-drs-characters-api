@@ -3,8 +3,10 @@ package com.ced.security;
 import com.ced.data.DetailsUserDate;
 import com.ced.model.User;
 import com.ced.repository.UserRepository;
-import com.ced.utils.helper.JwtHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,19 +14,23 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class JWTAuthFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final AuthenticationManager authenticationManager;
+    private final JwtHelper jwtHelper;
     private final UserRepository userRepository;
-    public JWTAuthFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
-        this.authenticationManager = authenticationManager;
+    private final AuthenticationManager authenticationManager;
+
+    public JWTAuthFilter(AuthenticationManager authenticationManager, UserRepository userRepository, JwtHelper jwtHelper) {
+        super(authenticationManager);
         this.userRepository = userRepository;
+        this.jwtHelper = jwtHelper;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
@@ -42,7 +48,7 @@ public class JWTAuthFilter extends UsernamePasswordAuthenticationFilter {
             ));
 
         } catch (IOException e) {
-            throw new AuthenticationServiceException("Falha ao autenticar usuario", e);
+            throw new AuthenticationServiceException("Fail!", e);
         }
     }
 
@@ -51,7 +57,7 @@ public class JWTAuthFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain, Authentication authResult) throws IOException {
 
         final DetailsUserDate detailsUserDate = (DetailsUserDate) authResult.getPrincipal();
-        final String token = JwtHelper.generateToken(detailsUserDate.getUsername());
+        final String token = jwtHelper.generateToken(detailsUserDate.getUsername());
 
         Optional<User> authenticatedUser = userRepository.findByEmail(detailsUserDate.getUsername());
         if (authenticatedUser.isPresent()) {
@@ -64,7 +70,7 @@ public class JWTAuthFilter extends UsernamePasswordAuthenticationFilter {
             response.getWriter().flush();
         } else {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            response.getWriter().write("{\"error\": \"Usuário não encontrado\"}");
+            response.getWriter().write("{\"error\": \"User Not Found\"}");
             response.getWriter().flush();
         }
     }
