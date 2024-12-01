@@ -14,10 +14,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+import static com.ced.constants.ApplicationConstants.PERSONAGENS;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "personagens")
+@Document(collection = PERSONAGENS)
 public class Character {
 
     @Id

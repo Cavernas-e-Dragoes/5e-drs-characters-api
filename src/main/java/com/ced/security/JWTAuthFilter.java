@@ -20,6 +20,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.ced.constants.ApplicationConstants.CONTENT_TYPE_JSON;
+import static com.ced.constants.ApplicationConstants.TOKEN_IDENTIFIER;
+import static com.ced.constants.ApplicationConstants.USER_IDENTIFIER;
+
 public class JWTAuthFilter extends UsernamePasswordAuthenticationFilter {
 
     private final JwtHelper jwtHelper;
@@ -62,10 +66,10 @@ public class JWTAuthFilter extends UsernamePasswordAuthenticationFilter {
         Optional<User> authenticatedUser = userRepository.findByEmail(detailsUserDate.getUsername());
         if (authenticatedUser.isPresent()) {
             Map<String, Object> responseBody = new HashMap<>();
-            responseBody.put("token", token);
-            responseBody.put("user", authenticatedUser.get());
+            responseBody.put(TOKEN_IDENTIFIER, token);
+            responseBody.put(USER_IDENTIFIER, authenticatedUser.get());
 
-            response.setContentType("application/json");
+            response.setContentType(CONTENT_TYPE_JSON);
             response.getWriter().write(new ObjectMapper().writeValueAsString(responseBody));
             response.getWriter().flush();
         } else {

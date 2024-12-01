@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 import static com.ced.constants.ApplicationConstants.BEARER_PREFIX;
+import static com.ced.constants.ApplicationConstants.JWT_SUBJECT_CLAIM;
 
 @Component
 public class JwtHelper {
@@ -28,7 +29,7 @@ public class JwtHelper {
             if (decodedJwt.getExpiresAt().before(new Date())) {
                 return null;
             }
-            Claim sub = decodedJwt.getClaim("sub");
+            Claim sub = decodedJwt.getClaim(JWT_SUBJECT_CLAIM);
             return sub == null ? null : sub.asString();
         } catch (Exception e) {
             throw new InvalidTokenException("Token inválido ou não fornecido.");

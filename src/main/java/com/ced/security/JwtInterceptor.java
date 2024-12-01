@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+import static com.ced.constants.ApplicationConstants.AUTHENTICATED_EMAIL;
 import static com.ced.constants.ApplicationConstants.AUTHORIZATION_HEADER;
 import static com.ced.constants.ApplicationConstants.BEARER_PREFIX;
 
@@ -34,7 +35,7 @@ public class JwtInterceptor implements Filter {
             String email = JwtHelper.decodeToken(authorizationHeader);
 
             if (email != null) {
-                httpRequest.setAttribute("authenticatedEmail", email);
+                httpRequest.setAttribute(AUTHENTICATED_EMAIL, email);
             } else {
                 httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
