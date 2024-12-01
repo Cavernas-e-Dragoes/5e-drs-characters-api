@@ -16,6 +16,13 @@ logging:
     com.github.bucket4j: DEBUG
     com.ced: DEBUG
 
+cors:
+  allowed-origins:
+    - https://characters.discloud.app
+    - http://localhost:4200
+    - https://cavernas-e-dragoes.web.app
+
 security:
   token: ${TOKEN_PASSWORD:xD}
   expiration: ${TOKEN_EXPIRATION:6000000}
+
