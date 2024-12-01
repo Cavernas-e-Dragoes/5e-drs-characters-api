@@ -29,7 +29,7 @@ public class CharController {
         this.charactersService = charactersService;
     }
 
-    @GetMapping("/lista")
+    @GetMapping
     public ResponseEntity<List<CharactersListSheetDTO>> list(@RequestHeader(value = "Authorization", required = false) final String jwt) {
         final String email = JwtHelper.decodeToken(jwt);
 

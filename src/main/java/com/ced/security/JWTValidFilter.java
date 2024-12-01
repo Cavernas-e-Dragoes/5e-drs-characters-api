@@ -15,10 +15,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.ced.constants.ApplicationConstants.AUTHORIZATION_HEADER;
+import static com.ced.constants.ApplicationConstants.BEARER_PREFIX;
+
 public class JWTValidFilter extends BasicAuthenticationFilter {
 
-    public static final String HEADER_ATT = "Authorization";
-    public static final String ATT_PREFIX = "Bearer ";
 
     private final SecurityProperties securityProperties;
 
@@ -31,14 +32,14 @@ public class JWTValidFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
-        String att = request.getHeader(HEADER_ATT);
+        String att = request.getHeader(AUTHORIZATION_HEADER);
 
-        if (att == null || !att.startsWith(ATT_PREFIX)) {
+        if (att == null || !att.startsWith(BEARER_PREFIX)) {
             chain.doFilter(request, response);
             return;
         }
 
-        String token = att.replace(ATT_PREFIX, "");
+        String token = att.replace(BEARER_PREFIX, "");
         UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(token);
 
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
