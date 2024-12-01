@@ -1,86 +1,61 @@
-//package com.ced.service;
-//
-//
-//
-//import com.ced.exception.EntityNotFoundException;
-//import com.ced.model.character.CharacterSheet;
-//import com.ced.dto.CharacterSheetDTO;
-//import com.ced.dto.CharactersListSheetDTO;
-//import org.modelmapper.ModelMapper;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.NoSuchElementException;
-//import java.util.Optional;
-//
-//
-//@Service
-//public class CharactersService {
-//
-//    private final CharactersRepository charactersRepository;
-//    private final ClassesRepository classesRepository;
-//
-//    private final ModelMapper modelMapper = new ModelMapper();
-//
-//    public CharactersService(final CharactersRepository charactersRepository,
-//                             final ClassesRepository classesRepository) {
-//        this.charactersRepository = charactersRepository;
-//        this.classesRepository = classesRepository;
-//    }
-//
-//    public List<CharactersListSheetDTO> findAll(final String email) {
-//        List<CharactersListSheetDTO> charactersSheetDTOS = new ArrayList<>();
-//
-//        List<CharacterSheet> characterSheetList = charactersRepository.findAllByEmail(email);
-//
-//        for (CharacterSheet characterSheet : characterSheetList) {
-//
-//            CharactersListSheetDTO charactersSheetDTO = convertToDtoList(characterSheet);
-//           // charactersSheetDTO.setRaceName(characterSheet.getRace().getName());
-//            //charactersSheetDTO.setClassName(characterSheet.getCharClass().getName());
-//
-//            charactersSheetDTOS.add(charactersSheetDTO);
-//        }
-//
-//        return charactersSheetDTOS;
-//    }
-//
-//    public CharacterSheet findById(final String email, final String id) {
-//        Optional<CharacterSheet> characterSheetOptional = charactersRepository.findById(id);
-//
-//        if (characterSheetOptional.isPresent()) {
-//            CharacterSheet characterSheet = characterSheetOptional.get();
-//            if (characterSheet.getEmail().equals(email)) {
-//                return characterSheet;
-//            } else {
-//                throw new EntityNotFoundException("O CharacterSheet não pertence ao usuário fornecido.");
-//            }
-//        } else {
-//            throw new EntityNotFoundException("CharacterSheet não encontrado com o ID fornecido.");
-//        }
-//    }
-//
-//    private CharactersListSheetDTO convertToDtoList(CharacterSheet characterSheet) {
-//        return modelMapper.map(characterSheet, CharactersListSheetDTO.class);
-//    }
-//
-//    private CharacterSheetDTO convertToDto(Optional<CharacterSheet> characterSheet) {
-//        if (characterSheet.isPresent()) {
-//            CharacterSheet sheet = characterSheet.get();
-//            return modelMapper.map(sheet, CharacterSheetDTO.class);
-//        } else {
-//            throw new NoSuchElementException("Personagem não encontrado");
-//        }
-//    }
-//
-//    public CharacterSheet save(final String email, final CharacterSheet characterSheet) {
-//       //Optional<CharClass> charClass = classesRepository.findById(characterSheet.getCharClass().getId());
-////TODO: Criar sequencia para pegar a classe, atributos nao serao necessarios, uma vez que fe fara isso
-//
-//        //characterSheet.setHitPoints(calcInitialHT(charClass.get().getHitDice(), convertAttribute(characterSheet.getConstitution())));
-//        characterSheet.setEmail(email);
-//        return charactersRepository.save(characterSheet);
-//    }
-//
-//}
+package com.ced.service;
+
+import com.ced.dto.CharactersListSheetDTO;
+import com.ced.exception.EntityNotFoundException;
+import com.ced.model.Character;
+import com.ced.model.utils.Progression;
+import com.ced.repository.CharactersRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.ced.utils.Calcs.calcInitialHT;
+import static com.ced.utils.Calcs.convertAttribute;
+
+@Service
+public class CharactersService {
+
+    private final CharactersRepository charactersRepository;
+
+    public CharactersService(final CharactersRepository charactersRepository) {
+        this.charactersRepository = charactersRepository;
+    }
+
+    public List<CharactersListSheetDTO> findAll(final String email) {
+        List<Character> characterList = charactersRepository.findAllByEmail(email);
+
+        return characterList.stream()
+                .map(this::convertToDtoList)
+                .collect(Collectors.toList());
+    }
+
+    public Character findById(final String email, final String id) {
+        return charactersRepository.findById(id)
+                .filter(character -> character.getEmail().equals(email))
+                .orElseThrow(() -> new EntityNotFoundException("CharacterSheet não encontrado ou não pertence ao usuário fornecido."));
+    }
+
+    private CharactersListSheetDTO convertToDtoList(Character character) {
+        return new CharactersListSheetDTO(
+                character.getId(),
+                character.getRace(),
+                character.getCharClass().name(),
+                character.getName(),
+                character.getProgression().getLevel()
+        );
+    }
+
+    public Character save(final String email, final Character character) {
+
+        if (character.getProgression() == null) {
+            character.setProgression(new Progression());
+        }
+
+        character.setHitPoints(calcInitialHT(character.getCharClass().getHitDie(),
+                convertAttribute(character.getAttributes().getConstitution())));
+        character.setEmail(email);
+
+        return charactersRepository.save(character);
+    }
+}

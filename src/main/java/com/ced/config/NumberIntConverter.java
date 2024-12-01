@@ -1,6 +1,5 @@
 package com.ced.config;
 
-
 import org.bson.Document;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;

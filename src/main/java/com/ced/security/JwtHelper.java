@@ -19,7 +19,7 @@ public class JwtHelper {
         this.securityProperties = securityProperties;
     }
 
-    public String decodeToken(String token) {
+    public static String decodeToken(String token) {
         try {
             token = token.replaceAll("Bearer\\s+", "");
             DecodedJWT decodedJwt = JWT.decode(token);

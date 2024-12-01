@@ -18,4 +18,4 @@ logging:
 
 security:
   token: ${TOKEN_PASSWORD:xD}
-  expiration: ${TOKEN_EXPIRATION:600000}
+  expiration: ${TOKEN_EXPIRATION:6000000}
