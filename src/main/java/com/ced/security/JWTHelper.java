@@ -14,11 +14,11 @@ import static com.ced.constants.ApplicationConstants.BEARER_PREFIX;
 import static com.ced.constants.ApplicationConstants.JWT_SUBJECT_CLAIM;
 
 @Component
-public class JwtHelper {
+public class JWTHelper {
 
     private final SecurityProperties securityProperties;
 
-    public JwtHelper(SecurityProperties securityProperties) {
+    public JWTHelper(SecurityProperties securityProperties) {
         this.securityProperties = securityProperties;
     }
 

@@ -1,8 +1,10 @@
 package com.ced.dto;
 
-public record CharactersListSheetDTO(
+import com.ced.model.enums.Race;
+
+public record CharactersListDTO(
         String id,
-        String raceName,
+        Race raceName,
         String className,
         String name,
         Integer level

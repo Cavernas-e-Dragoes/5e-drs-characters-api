@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.ced.constants.ApplicationConstants.BASE_API_USER;
+
 @RestController
-@RequestMapping("/v1/api/user")
+@RequestMapping(BASE_API_USER)
 public class UserController {
 
     private final UserService userService;
@@ -21,7 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<UserDTO> create(@RequestBody @Valid User user) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.userCreate(user));
     }

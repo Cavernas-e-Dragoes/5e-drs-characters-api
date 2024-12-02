@@ -26,11 +26,11 @@ import static com.ced.constants.ApplicationConstants.USER_IDENTIFIER;
 
 public class JWTAuthFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final JwtHelper jwtHelper;
+    private final JWTHelper jwtHelper;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
 
-    public JWTAuthFilter(AuthenticationManager authenticationManager, UserRepository userRepository, JwtHelper jwtHelper) {
+    public JWTAuthFilter(AuthenticationManager authenticationManager, UserRepository userRepository, JWTHelper jwtHelper) {
         super(authenticationManager);
         this.userRepository = userRepository;
         this.jwtHelper = jwtHelper;

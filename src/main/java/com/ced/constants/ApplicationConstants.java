@@ -2,7 +2,8 @@ package com.ced.constants;
 
 public class ApplicationConstants {
 
-    private ApplicationConstants() {}
+    private ApplicationConstants() {
+    }
 
     // JWT and Authorization
     public static final String AUTHORIZATION_HEADER = "Authorization";
@@ -21,6 +22,10 @@ public class ApplicationConstants {
     // Collections
     public static final String PERSONAGENS = "personagens";
     public static final String USERS = "users";
+
+    // Endpoints base paths
+    public static final String BASE_API_PERSONAGENS = "/api/personagens";
+    public static final String BASE_API_USER = "/api/user";
 
 
 }

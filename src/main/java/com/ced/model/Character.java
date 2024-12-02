@@ -1,9 +1,13 @@
 package com.ced.model;
 
+import com.ced.model.enums.Race;
+import com.ced.model.enums.Subrace;
 import com.ced.model.utils.Attributes;
-import com.ced.model.utils.CharacterClass;
+import com.ced.model.enums.CharacterClass;
+import com.ced.model.utils.Equipment;
 import com.ced.model.utils.Progression;
 import com.ced.model.utils.Skills;
+import com.ced.model.utils.Spell;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,20 +31,24 @@ public class Character {
     @Indexed
     private String email;
 
+    @NotNull
     private String name;
-    private String race;
-    private String subRace;
+
     private Integer inspiration;
     private Integer hitPoints;
 
     @NotNull
     private CharacterClass charClass;
+    @NotNull
+    private Race race;
+    @NotNull
+    private Subrace subRace;
 
     private Attributes attributes;
     private Skills skills;
 
-    private List<Object> equipments;
-    private List<Object> magics;
+    private List<Equipment> equipments;
+    private List<Spell> spells;
 
     private Progression progression;
 }

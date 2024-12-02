@@ -1,4 +1,4 @@
-package com.ced.model.utils;
+package com.ced.model.enums;
 
 import lombok.Getter;
 

@@ -15,7 +15,7 @@ import static com.ced.constants.ApplicationConstants.AUTHORIZATION_HEADER;
 import static com.ced.constants.ApplicationConstants.BEARER_PREFIX;
 
 @Component
-public class JwtInterceptor implements Filter {
+public class JWTInterceptor implements Filter {
 
 
     @Override
@@ -32,7 +32,7 @@ public class JwtInterceptor implements Filter {
         }
 
         try {
-            String email = JwtHelper.decodeToken(authorizationHeader);
+            String email = JWTHelper.decodeToken(authorizationHeader);
 
             if (email != null) {
                 httpRequest.setAttribute(AUTHENTICATED_EMAIL, email);
@@ -45,7 +45,6 @@ public class JwtInterceptor implements Filter {
             httpResponse.getWriter().write("{\"error\": \"Invalid or expired token\"}");
             return;
         }
-
         chain.doFilter(request, response);
     }
 }

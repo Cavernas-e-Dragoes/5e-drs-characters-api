@@ -36,7 +36,7 @@ public class WebConfig {
     private SecurityProperties securityProperties;
 
     @Autowired
-    private JwtHelper jwtHelper;
+    private JWTHelper jwtHelper;
 
     private final AuthenticationConfiguration configuration;
 
