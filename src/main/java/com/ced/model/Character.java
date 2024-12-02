@@ -29,8 +29,8 @@ public class Character {
     @Id
     private String id;
     @Indexed
+    @NotNull
     private String email;
-
     @NotNull
     private String name;
 
