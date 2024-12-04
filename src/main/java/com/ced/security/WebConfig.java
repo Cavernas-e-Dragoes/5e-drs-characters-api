@@ -1,7 +1,7 @@
 package com.ced.security;
 
-import com.ced.config.CorsConfigProperties;
-import com.ced.config.SecurityProperties;
+import com.ced.properties.CorsConfigProperties;
+import com.ced.properties.SecurityProperties;
 import com.ced.repository.UserRepository;
 import com.ced.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

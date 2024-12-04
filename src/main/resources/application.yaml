@@ -3,6 +3,8 @@ spring:
     mongodb:
       database: ${MONGODB_DATABASE:local}
       uri: ${MONGODB_URI:mongodb://localhost:27017}
+  rabbitmq:
+    addresses: ${MQ_ADDRESSES:amqps://localhost:5672}
   banner:
     location: classpath:banner.txt
 
@@ -26,3 +28,7 @@ security:
   token: ${TOKEN_PASSWORD:xD}
   expiration: ${TOKEN_EXPIRATION:6000000}
 
+amqp:
+  exchange-name: ${EXCHANGE_NAME:xD}
+  queue-name: ${QUEUE_NAME:xD}
+  routing-key: ${ROUTING_KEY:xD}

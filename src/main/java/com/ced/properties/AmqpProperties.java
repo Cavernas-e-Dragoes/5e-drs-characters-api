@@ -1,4 +1,4 @@
-package com.ced.config;
+package com.ced.properties;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,10 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @Getter
 @Configuration
-@ConfigurationProperties(prefix = "security")
-public class SecurityProperties {
-
-    private String token;
-    private Long expiration;
-
+@ConfigurationProperties(prefix = "amqp")
+public class AmqpProperties {
+    private String queueName;
+    private String exchangeName;
+    private String routingKey;
 }
